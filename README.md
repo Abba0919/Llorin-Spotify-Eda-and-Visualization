@@ -40,13 +40,13 @@ df
 | 952 |	Alone	Burna Boy |1 |	2022 |	11 |	4 |	782 |	2 |	96007391 |	27 |	... |	90 |	E	| Minor |	61 |	32 |	67 |	15 |	0 |	11 |	5 |
 
 
-  - I used this code to know what will I input in the markdown for output.
+  - I used this code to know what I will input in the markdown for output.
 ```python
 print(df.head().to_markdown())
 ```
     
 - How many rows and columns does the dataset contain?
-  - 953 rows × 24 columns
+  - The dataset contains 953 rows × 24 columns
     
 - What are the data types of each column? Are there any missing values?
   - To know the data types of each column we need to input:
@@ -60,7 +60,7 @@ RangeIndex: 953 entries, 0 to 952
 Data columns (total 24 columns):
 
 | # | Column | Non-Null Count | Dtype |
-|---|--------|-------- -------|-------| 
+|---|--------|---------------|-------|
 | 0 | track_name | 953 non-null | object |
 | 2 | artist_count |          953 non-null |    int64 | 
 | 3 | released_year |         953 non-null |    int64 | 
@@ -86,8 +86,10 @@ Data columns (total 24 columns):
 | 23 | speechiness_% |         953 non-null |    int64 | 
 
 dtypes: int64(17), object(7)
+
 memory usage: 178.8+ KB
-    
+
+ - By using `df.info()` , you can know if there are any missing values. The key and in_shazam_charts has 858 and 903 non-null count while all of the column contains 953 non-null count. This means that these two contains misisng values. Also, by using this panda function, you can see the data type of the 24 columns that has been displayed.  
 ## Basic Descriptive Statistics
 - What are the mean, median, and standard deviation of the streams column?
   
@@ -95,8 +97,34 @@ memory usage: 178.8+ KB
 
 ## Top Performers
 - Which track has the highest number of streams? Display the top 5 most streamed tracks.
+```python
+df.nlargest(5, 'streams')[['track_name', 'streams']]
+```
+  - Output:
+| # | track_name | streams |
+|--|------------|---------|
+| 55 | Blinding Lights |	3.703895e+09 |
+| 179 | Shape of You |	3.562544e+09 |
+| 86 | Someone You Loved | 2.887242e+09 |
+| 620 | Dance Monkey |	2.864792e+09 |
+| 41 | Sunflower - Spider-Man: Into the Spider-Verse |	2.808097e+09 |
+ - This outputs the top 5 most streamed tracks.
+   
 - Who are the top 5 most frequent artists based on the number of tracks in the dataset?
+```python
+df['artist(s)_name'].value_counts().head(5).nlargest(5)
+```
+ - Output:
+| artist(s)_name | count|
+|----------------|---|
+| Taylor Swift | 34 |
+| The Weeknd | 22 |
+| Bad Bunny | 19 |
+| SZA | 19 |
+| Harry Styles | 17 |
 
+Name: count, dtype: int64
+  
 ## Temporal Trends
 - Analyze the trends in the number of tracks released over time. Plot the number of tracks released per year.
 - Does the number of tracks released per month follow any noticeable patterns? Which month sees the most releases?
