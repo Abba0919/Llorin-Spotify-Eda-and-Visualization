@@ -100,23 +100,28 @@ memory usage: 178.8+ KB
 ```python
 df.nlargest(5, 'streams')[['track_name', 'streams']]
 ```
-  - Output:
-| # | track_name | streams |
-|--|------------|---------|
+- Output:
+
+| | track_name | streams |
+|--|-----------|---------|
 | 55 | Blinding Lights |	3.703895e+09 |
 | 179 | Shape of You |	3.562544e+09 |
 | 86 | Someone You Loved | 2.887242e+09 |
 | 620 | Dance Monkey |	2.864792e+09 |
 | 41 | Sunflower - Spider-Man: Into the Spider-Verse |	2.808097e+09 |
- - This outputs the top 5 most streamed tracks.
-   
+This outputs the top 5 most streamed tracks, and the top 1 track is the Blinding Lights.
+
+
+
 - Who are the top 5 most frequent artists based on the number of tracks in the dataset?
+   - To know the top 5 mos frequent artist, you need to input:
 ```python
 df['artist(s)_name'].value_counts().head(5).nlargest(5)
 ```
  - Output:
-| artist(s)_name | count|
-|----------------|---|
+   
+| artist(s)_name | |
+|----------------|-|
 | Taylor Swift | 34 |
 | The Weeknd | 22 |
 | Bad Bunny | 19 |
@@ -124,7 +129,9 @@ df['artist(s)_name'].value_counts().head(5).nlargest(5)
 | Harry Styles | 17 |
 
 Name: count, dtype: int64
-  
+
+  - This displaces the top 5 most frequent artists and the most frequent artist based on the number of tracks in Taylor Swift.
+    
 ## Temporal Trends
 - Analyze the trends in the number of tracks released over time. Plot the number of tracks released per year.
 - Does the number of tracks released per month follow any noticeable patterns? Which month sees the most releases?
