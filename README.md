@@ -101,6 +101,7 @@ memory usage: 178.8+ KB
 df.nlargest(5, 'streams')[['track_name', 'streams']]
 ```
 - Output:
+  - This outputs the top 5 most streamed tracks, and the top 1 track is the Blinding Lights.
 
 | | track_name | streams |
 |--|-----------|---------|
@@ -109,7 +110,6 @@ df.nlargest(5, 'streams')[['track_name', 'streams']]
 | 86 | Someone You Loved | 2.887242e+09 |
 | 620 | Dance Monkey |	2.864792e+09 |
 | 41 | Sunflower - Spider-Man: Into the Spider-Verse |	2.808097e+09 |
-This outputs the top 5 most streamed tracks, and the top 1 track is the Blinding Lights.
 
 
 
