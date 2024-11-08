@@ -41,6 +41,7 @@ df
 
 
   - I used this code to know what I will input in the markdown for output.
+
 ```python
 print(df.head().to_markdown())
 ```
@@ -89,7 +90,8 @@ dtypes: int64(17), object(7)
 
 memory usage: 178.8+ KB
 
- - By using `df.info()` , you can know if there are any missing values. The key and in_shazam_charts has 858 and 903 non-null count while all of the column contains 953 non-null count. This means that these two contains misisng values. Also, by using this panda function, you can see the data type of the 24 columns that has been displayed.  
+ - By using `df.info()` , you can know if there are any missing values. The key and in_shazam_charts has 858 and 903 non-null count while all of the column contains 953 non-null count. This means that these two contains misisng values. Also, by using this panda function, you can see the data type of the 24 columns that has been displayed.
+
 ## Basic Descriptive Statistics
 - What are the mean, median, and standard deviation of the streams column?
   
@@ -100,7 +102,9 @@ memory usage: 178.8+ KB
 ```python
 df.nlargest(5, 'streams')[['track_name', 'streams']]
 ```
+
 - Output:
+    
   - This outputs the top 5 most streamed tracks, and the top 1 track is the Blinding Lights.
 
 | | track_name | streams |
@@ -110,7 +114,6 @@ df.nlargest(5, 'streams')[['track_name', 'streams']]
 | 86 | Someone You Loved | 2.887242e+09 |
 | 620 | Dance Monkey |	2.864792e+09 |
 | 41 | Sunflower - Spider-Man: Into the Spider-Verse |	2.808097e+09 |
-
 
 
 - Who are the top 5 most frequent artists based on the number of tracks in the dataset?
@@ -134,15 +137,102 @@ Name: count, dtype: int64
     
 ## Temporal Trends
 - Analyze the trends in the number of tracks released over time. Plot the number of tracks released per year.
+
+```python
+year_distribution = df.groupby('released_year').size().sort_index()
+plt.figure(figsize=(10, 10))
+plt.bar(year_distribution.index, year_distribution.values, color='blue')
+plt.xlabel('Year of Release')
+plt.ylabel('Number of Tracks')
+plt.title('Number of Tracks Released Per Year')
+plt.show()
+```
+
 - Does the number of tracks released per month follow any noticeable patterns? Which month sees the most releases?
+  
+```python
+year_distribution = df.groupby('released_year').size().sort_index()
+plt.figure(figsize=(10, 10))
+plt.bar(year_distribution.index, year_distribution.values, color='blue')
+plt.xlabel('Year of Release')
+plt.ylabel('Number of Tracks')
+plt.title('Tracks Released Per Year')
+plt.show()
+```
 
 ## Genre and Music Characteristics
 - Examine the correlation between streams and musical attributes like bpm, danceability_%, and energy_%. Which attributes seem to influence streams the most?
-- Is there a correlation between danceability_% and energy_%? How about valence_% and acousticness_%?
+  plt.figure(figsize=(18, 5))
+attr = ['streams', 'bpm', 'danceability_%', 'energy_%']
+dfs = df[attr]
 
+
+# Scatter plot for Streams and BPM
+```python
+plt.subplot(1, 3, 1)
+plt.scatter(dfs['bpm'], dfs['streams'], color='violet')
+plt.xlabel('BPM')
+plt.ylabel('Streams')
+plt.title('Streams and BPM')
+
+# Scatter plot for Streams and Danceability
+plt.subplot(1, 3, 2)
+plt.scatter(dfs['danceability_%'], dfs['streams'], color='orange')
+plt.xlabel('Danceability (%)')
+plt.ylabel('Streams')
+plt.title('Streams and Danceability')
+
+# Scatter plot for Streams vs. Energy
+plt.subplot(1, 3, 3)
+plt.scatter(dfs['energy_%'], dfs['streams'], color='black')
+plt.xlabel('Energy (%)')
+plt.ylabel('Streams')
+plt.title('Streams vs. Energy')
+
+plt.show()
+```
+
+- Is there a correlation between danceability_% and energy_%? How about valence_% and acousticness_%?
+```python
+plt.figure(figsize=(18, 5))
+
+# Create scatter plots for BPM, Danceability, and Energy opposing Streams
+plt.scatter(df['bpm'], df['streams'], color='black', label='BPM')
+plt.scatter(df['danceability_%'], df['streams'], color='yellow', label='Danceability (%)')
+plt.scatter(df['energy_%'], df['streams'], color='blue', label='Energy (%)')
+
+# Adding labels and title
+plt.xlabel('Musical Attributes')
+plt.ylabel('Streams')
+plt.title('Streams and BPM, Danceability (%), and Energy (%)')
+
+plt.legend()
+plt.show()
+```
 ## Platform Popularity
  - How do the numbers of tracks in spotify_playlists, spotify_charts, and apple_playlists compare? Which platform seems to favor the most popular tracks?
  
 ## Advanced Analysis
 - Based on the streams data, can you identify any patterns among tracks with the same key or mode (Major vs. Minor)?
+ 
+
 - Do certain genres or artists consistently appear in more playlists or charts? Perform an analysis to compare the most frequently appearing artists in playlists or charts.
+
+```python
+# Group the data
+artcts = df.groupby('artist(s)_name')[['in_spotify_playlists', 'in_spotify_charts', 'in_apple_playlists']].sum()
+
+# Calculate the total appearances across all categories for each artist
+artcts['total_appearances'] = artcts.sum(axis=1)
+
+# Sort the artists based on their total appearances and select the top 10
+top_10_artists = artcts.sort_values(by='total_appearances', ascending=False).head(10)
+
+# Reset index to make the artist names a column
+top_10_artists.reset_index(inplace=True)
+
+top_10_artists
+```
+## References
+- https://stackoverflow.com/questions/7048745/what-is-the-difference-between-utf-8-and-iso-8859-1
+- https://www.w3schools.com/python/pandas/pandas_cleaning.asp
