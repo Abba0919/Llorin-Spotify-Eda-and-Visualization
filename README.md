@@ -137,7 +137,8 @@ Name: count, dtype: int64
     
 ## Temporal Trends
 - Analyze the trends in the number of tracks released over time. Plot the number of tracks released per year.
-
+  - To know the number of track released over time, I used the code:
+  - Input:
 ```python
 year_distribution = df.groupby('released_year').size().sort_index()
 plt.figure(figsize=(10, 10))
@@ -147,9 +148,14 @@ plt.ylabel('Number of Tracks')
 plt.title('Number of Tracks Released Per Year')
 plt.show()
 ```
+  - Output:
+    ![image](https://github.com/user-attachments/assets/27338400-837d-4250-90a0-41f366d1f618)
+
+  - By using this code, you will know that the bar graph is increasing every year and the highest track released over time is on year 2022.
 
 - Does the number of tracks released per month follow any noticeable patterns? Which month sees the most releases?
-  
+  - To know the number of tracks released per month, I use the code:
+  - Input:
 ```python
 year_distribution = df.groupby('released_year').size().sort_index()
 plt.figure(figsize=(10, 10))
@@ -159,16 +165,23 @@ plt.ylabel('Number of Tracks')
 plt.title('Tracks Released Per Year')
 plt.show()
 ```
+   - Output:
+     ![image](https://github.com/user-attachments/assets/40f2f931-6870-4439-b3e0-75de93a5a338)
 
+   
+   - By using this code, the most release track will be on January and May labelling 1 and 5.
+     
 ## Genre and Music Characteristics
 - Examine the correlation between streams and musical attributes like bpm, danceability_%, and energy_%. Which attributes seem to influence streams the most?
-  plt.figure(figsize=(18, 5))
+  - By using the code below, you may the correlations between these and which attributes seem to influence the stream.
+  - Input:
+```python
+plt.figure(figsize=(18, 5))
 attr = ['streams', 'bpm', 'danceability_%', 'energy_%']
 dfs = df[attr]
 
 
 # Scatter plot for Streams and BPM
-```python
 plt.subplot(1, 3, 1)
 plt.scatter(dfs['bpm'], dfs['streams'], color='violet')
 plt.xlabel('BPM')
@@ -191,24 +204,51 @@ plt.title('Streams vs. Energy')
 
 plt.show()
 ```
+   - Output:
+     ![image](https://github.com/user-attachments/assets/68181e6b-4ce1-4a82-9cb8-aceec9ea7ba0)
 
+   - If you look at the scatter plot above, the most influence stream the most are danceability and energy because these two shows the most correlation between the three.
+     
 - Is there a correlation between danceability_% and energy_%? How about valence_% and acousticness_%?
+- In danceability and energy:
+- Input:
 ```python
 plt.figure(figsize=(18, 5))
+attr = ['danceability_%', 'energy_%']
+dfs = df[attr]
 
-# Create scatter plots for BPM, Danceability, and Energy opposing Streams
-plt.scatter(df['bpm'], df['streams'], color='black', label='BPM')
-plt.scatter(df['danceability_%'], df['streams'], color='yellow', label='Danceability (%)')
-plt.scatter(df['energy_%'], df['streams'], color='blue', label='Energy (%)')
+plt.scatter(dfs['danceability_%'], dfs['energy_%'], color='red')
+plt.xlabel('Danceability (%)')
+plt.ylabel('Energy')
+plt.title('Enrgy and Danceability')
 
-# Adding labels and title
-plt.xlabel('Musical Attributes')
-plt.ylabel('Streams')
-plt.title('Streams and BPM, Danceability (%), and Energy (%)')
-
-plt.legend()
 plt.show()
 ```
+  - Output:
+    ![image](https://github.com/user-attachments/assets/6fc95151-7f96-4962-851f-9ff3617f483e)
+
+  - As shown from above, Danceability and Bpm shows the most
+
+  - In valence and acousticness:
+  - Input:
+    
+```python
+plt.figure(figsize=(18, 5))
+attr = ['valence_%', 'acousticness_%']
+dfs = df[attr]
+
+plt.scatter(dfs['valence_%'], dfs['acousticness_%'], color='red')
+plt.xlabel('valence_ (%)')
+plt.ylabel('acousticness_')
+plt.title('valence_ and acousticness_')
+
+plt.show()
+```
+ - Output:
+   ![image](https://github.com/user-attachments/assets/94505ff8-6ab0-4558-95e7-55c11f3d1d08)
+
+ - The picture shown above shows no correlation between valence and acousticess.
+   
 ## Platform Popularity
  - How do the numbers of tracks in spotify_playlists, spotify_charts, and apple_playlists compare? Which platform seems to favor the most popular tracks?
  
@@ -217,7 +257,7 @@ plt.show()
  
 
 - Do certain genres or artists consistently appear in more playlists or charts? Perform an analysis to compare the most frequently appearing artists in playlists or charts.
-
+  - Input:
 ```python
 # Group the data
 artcts = df.groupby('artist(s)_name')[['in_spotify_playlists', 'in_spotify_charts', 'in_apple_playlists']].sum()
@@ -233,6 +273,9 @@ top_10_artists.reset_index(inplace=True)
 
 top_10_artists
 ```
+  - Output:
+    ![image](https://github.com/user-attachments/assets/8262279e-7d01-447b-9739-953ad2d7daf4)
+  - This shows the top 10 genres or artist tat appear more. That being said, The Weekend appear to be top 1 who appear the most.
 ## References
 - https://stackoverflow.com/questions/7048745/what-is-the-difference-between-utf-8-and-iso-8859-1
 - https://www.w3schools.com/python/pandas/pandas_cleaning.asp
