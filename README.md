@@ -1,4 +1,4 @@
-![image](https://github.com/user-attachments/assets/ca47a9a5-2731-4f88-8d4c-e70e7be35ee0)# Exploratory Data Analysis on Spotify 2023 Dataset
+# Exploratory Data Analysis on Spotify 2023 Dataset
 
 ## Guideline
 in this deliverable, you will make an exploratory data analysis on a dataset containing information about popular tracks on Most Streamed Spotify Songs 2023. This task aims to analyze, visualize, and interpret the data to extract meaningful insights.
@@ -141,8 +141,8 @@ plt.ylabel('Frequency')
 
 plt.show()
 ```
-  - Output:
-  ![image](https://github.com/user-attachments/assets/8058da1d-b5ee-4d5d-94fe-51cbf467c462)
+- Output:
+![image](https://github.com/user-attachments/assets/8058da1d-b5ee-4d5d-94fe-51cbf467c462)  
 - in the picture above, we can see that the released year and released count is in highest in year 2020.
 
 ## Top Performers
@@ -213,8 +213,8 @@ plt.ylabel('Number of Tracks')
 plt.title('Tracks Released Per Year')
 plt.show()
 ```
-   - Output:
-     ![image](https://github.com/user-attachments/assets/40f2f931-6870-4439-b3e0-75de93a5a338)
+- Output:
+![image](https://github.com/user-attachments/assets/40f2f931-6870-4439-b3e0-75de93a5a338)
 
    
    - By using this code, the most release track will be on January and May labelling 1 and 5.
@@ -299,10 +299,56 @@ plt.show()
    
 ## Platform Popularity
  - How do the numbers of tracks in spotify_playlists, spotify_charts, and apple_playlists compare? Which platform seems to favor the most popular tracks?
- 
+ - Input:
+ ```python  
+ ave_playlists = df['in_spotify_playlists'].mean()
+ave_charts = df['in_spotify_charts'].mean()
+ave_playlists = df['in_apple_playlists'].mean()
+
+playlist_counts = pd.Series({
+    'Spotify Playlists': ave_playlists,
+    'Spotify Charts': ave_charts,
+    'Apple Playlists': ave_playlists
+})
+
+playlist_counts.plot(kind ='bar', color= 'red')
+plt.title('Number of Tracks in Playlists')
+plt.xlabel('Category')
+plt.ylabel('Total Playlist Count')
+plt.show()
+```
+- Output:
+![image](https://github.com/user-attachments/assets/d0c63a81-ba4c-406f-beaa-ada63b3974e9)
+
+- In the picture above, The most popular track is the spotify and apple playlist.   
 ## Advanced Analysis
 - Based on the streams data, can you identify any patterns among tracks with the same key or mode (Major vs. Minor)?
- 
+  - Input:
+    
+```python  
+plt.figure(figsize=(10, 5))
+
+ave_streams_key = df.groupby('key')['streams'].mean()
+ave_streams_mode = df.groupby('mode')['streams'].mean()
+
+# 2nd plot for major and minor
+plt.subplot(1, 2, 2)  
+avg_streams_by_key.plot()
+plt.xlabel('Mode') 
+plt.ylabel('Ave streams') 
+
+# plot of ave streams
+plt.subplot(1, 2, 1)
+avg_streams_by_key.plot()
+plt.xlabel('Key')
+plt.ylabel('Ave Streams')
+
+plt.show()
+```
+- Output:
+  ![image](https://github.com/user-attachments/assets/c46d9f7f-f48d-4934-868b-543b9e2680b6)
+  
+  - the first table shows the average number of streams for each musical keys. The graph increases from a to b then decrease in c. The pattern increase then decrease will continue until it goes to G#. In the second table, it shows the major and minor of streams. The pattern is the same as the first table.
 
 - Do certain genres or artists consistently appear in more playlists or charts? Perform an analysis to compare the most frequently appearing artists in playlists or charts.
   - Input:
