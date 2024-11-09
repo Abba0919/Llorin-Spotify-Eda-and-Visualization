@@ -94,33 +94,37 @@ memory usage: 178.8+ KB
 
 ## Basic Descriptive Statistics
 - What are the mean, median, and standard deviation of the streams column?
+  
   - to get the mean median and mode, first you need to input `df.describe().round`.
-   - Input:
+## mean
+- Input:
 ```python
 df['streams'] = pd.to_numeric(df['streams'], errors='coerce')
 df = df.dropna(subset=['streams'])
 mstreams = df['streams'].mean()
 mstreams
 ```
-    - Output: 514137424.93907565
-- median:
+- Output: 514137424.93907565
+## median:
 - Input:
-  ```python
-  df['streams'].median()
-  ```
-  - Outut: 290530915.0
+```python
+df['streams'].median()
+```
 
-- Standard Deviation:
+- Outut: 290530915.0
+
+
+ ## Standard Deviation:
 - Input:
-  ```python
-  df['streams'].std()
-  ```
+```python
+df['streams'].std()
+```
+
 - Output: 566856949.0388832
 
 - What is the distribution of released_year and artist_count? Are there any noticeable trends or outliers?
   - By graphing this, we can can the distrubtion by inputing this code.
-  ```python
-
+```python
 plt.figure(figsize=(10, 5))
 
 # Distribution of the released_year
