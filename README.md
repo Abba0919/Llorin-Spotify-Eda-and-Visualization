@@ -1,4 +1,4 @@
-# Exploratory Data Analysis on Spotify 2023 Dataset
+![image](https://github.com/user-attachments/assets/ca47a9a5-2731-4f88-8d4c-e70e7be35ee0)# Exploratory Data Analysis on Spotify 2023 Dataset
 
 ## Guideline
 in this deliverable, you will make an exploratory data analysis on a dataset containing information about popular tracks on Most Streamed Spotify Songs 2023. This task aims to analyze, visualize, and interpret the data to extract meaningful insights.
@@ -94,8 +94,52 @@ memory usage: 178.8+ KB
 
 ## Basic Descriptive Statistics
 - What are the mean, median, and standard deviation of the streams column?
-  
+  - to get the mean median and mode, first you need to input `df.describe().round`.
+   - Input:
+```python
+df['streams'] = pd.to_numeric(df['streams'], errors='coerce')
+df = df.dropna(subset=['streams'])
+mstreams = df['streams'].mean()
+mstreams
+```
+    - Output: 514137424.93907565
+- median:
+- Input:
+  ```python
+  df['streams'].median()
+  ```
+  - Outut: 290530915.0
+
+- Standard Deviation:
+- Input:
+  ```python
+  df['streams'].std()
+  ```
+- Output: 566856949.0388832
+
 - What is the distribution of released_year and artist_count? Are there any noticeable trends or outliers?
+  - By graphing this, we can can the distrubtion by inputing this code.
+  ```python
+
+plt.figure(figsize=(10, 5))
+
+# Distribution of the released_year
+plt.subplot(1, 2, 1)
+plt.hist(df['released_year'], color = 'blue')
+plt.xlabel('Year')
+plt.ylabel('Frequency')
+
+# 2nd plot
+plt.subplot(1, 2, 2)  
+plt.hist(df['artist_count'],  color = 'red' )
+plt.xlabel('Number of Artists') 
+plt.ylabel('Frequency')  
+
+plt.show()
+```
+  - Output:
+  ![image](https://github.com/user-attachments/assets/8058da1d-b5ee-4d5d-94fe-51cbf467c462)
+- in the picture above, we can see that the released year and released count is in highest in year 2020.
 
 ## Top Performers
 - Which track has the highest number of streams? Display the top 5 most streamed tracks.
